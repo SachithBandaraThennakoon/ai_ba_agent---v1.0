@@ -1,0 +1,173 @@
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+
+python app.py
+
+python -m vector_db.load_company_docs
+
+py -3.11 -m venv venv
+venv\Scripts\activate
+python --version
+
+winget install Python.Python.3.11
+
+///////////////////////////////
+1️⃣ Start API
+uvicorn api.main:app --reload
+
+2️⃣ Start UI
+streamlit run ui/app.py
+
+Open browser:
+http://localhost:8501
+
+////////////////////////////////////////
+🔥 Step 1 — Delete the Vector Store Folder
+Close your app first.
+Then delete this folder:
+vector_db_store/
+(Just delete it manually from File Explorer)
+This removes all old embeddings.
+
+🔁 Step 2 — Re-ingest Documents
+Open a Python shell in project root:
+python
+Then run:
+
+python
+
+from vector_db.company_knowledge import load_company_docs
+load_company_docs("company_docs")
+
+You should see:
+✅ Company knowledge loaded into Vector DB
+
+Exit Python:
+exit()
+
+▶ Step 3 — Run App Again
+python app.py
+
+//////////
+
+openai>=1.0.0
+python-dotenv
+
+beautifulsoup4
+requests
+faiss-cpu
+tiktoken
+chromadb
+
+langgraph
+langchain-core
+
+reportlab
+
+fastapi
+uvicorn
+pydantic
+
+streamlit
+requests
+/////////
+import os
+import chromadb
+from chromadb.config import Settings
+from openai import OpenAI
+from dotenv import load_dotenv
+import uuid
+
+load_dotenv()
+client = OpenAI()
+
+/////////////
+
+## 🔹 STEP 1 — Deactivate Virtual Environment
+
+```bash
+deactivate
+```
+## 🔹 STEP 2 — Delete the Existing Virtual Environment
+```bash
+rm -rf venv
+```
+⚠️ This deletes **only** the virtual environment, **not your code**.
+---
+## 🔹 STEP 3 — Create a Fresh Virtual Environment (Python 3.11)
+```bash
+python3.11 -m venv venv
+```
+## 🔹 STEP 4 — Activate It
+
+```bash
+source venv/bin/activate
+```
+Verify:
+```bash
+python --version
+```
+Expected:
+```
+Python 3.11.x
+
+## 🔹 STEP 5 — Install Clean Dependencies
+
+Make sure you already pulled latest GitHub changes.
+
+Then:
+
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+## 🔹 STEP 6 — Verify Core Packages
+pip show fastapi chromadb langgraph
+No errors → ✅ perfect
+
+---
+////////////////
+STEP 2 — Pull Latest Changes from GitHub
+git pull origin main
+/////////
+python3.11 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+deactivate
+//////////////////////
+
+Client (UI / Postman / Web)
+        ↓
+FastAPI
+        ↓
+Session Memory (SQLite)
+        ↓
+Client Agent (RAG-enabled)
+        ↓ CONFIRM
+LangGraph Proposal Pipeline
+        ↓
+Final Proposal (MD + PDF)
+///////////////////////////////
+Client Summary (confirmed)
+        ↓
+BA Agent
+        ↓
+Solution Architect Agent
+        ↓
+Final Proposal Agent
+//////////////////////////////
+Client ↔ Client Agent
+        ↓ CONFIRM
+Structured Business Summary
+        ↓
+BA Agent
+        ↓
+Solution Architect Agent
+///////////////////////////////
+pip install beautifulsoup4 markdown
+pip install reportlab markdown beautifulsoup4
+pip install markdown beautifulsoup4 reportlab
+
+

@@ -1,0 +1,21 @@
+from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+
+client = OpenAI()
+
+def ba_agent(business_summary: str) -> str:
+    with open("prompts/ba_agent.txt", "r") as f:
+        system_prompt = f.read()
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": business_summary}
+        ],
+        temperature=0.3
+    )
+
+    return response.choices[0].message.content
