@@ -1,35 +1,50 @@
-pysqlite3
-
-jinja2
-
-openai>=1.0.0
+# ---------------------------
+# Core backend
+# ---------------------------
+fastapi
+uvicorn
+gunicorn
+pydantic
 python-dotenv
 
-beautifulsoup4
-requests
-faiss-cpu
+# ---------------------------
+# AI / LLM
+# ---------------------------
+openai>=1.0.0
 tiktoken
-chromadb
-
 langgraph
 langchain-core
 
-reportlab
-
-fastapi
-uvicorn
-pydantic
-
-streamlit
-
-
-# Force compatible NumPy
-numpy<2.0
-
-gunicorn
-
-azure-communication-email
-
+# ---------------------------
+# Vector DB / Retrieval
+# ---------------------------
+chromadb
+faiss-cpu
+beautifulsoup4
+requests
 markdown
 
+# ---------------------------
+# PDF generation
+# ---------------------------
+reportlab
 
+# ---------------------------
+# Azure services
+# ---------------------------
+azure-communication-email
+
+# ---------------------------
+# Database
+# ---------------------------
+pysqlite3-binary
+
+# ---------------------------
+# Utilities
+# ---------------------------
+jinja2
+
+# ---------------------------
+# NumPy (Azure compatible)
+# ---------------------------
+numpy<2.0

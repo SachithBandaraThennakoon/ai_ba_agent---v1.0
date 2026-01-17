@@ -8,6 +8,11 @@ from dotenv import load_dotenv
 # ---- Load env ----
 load_dotenv()
 
+#--------------------------------------------------
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
 # ---- Azure Communication Services ----
 from azure.communication.email import EmailClient
 
@@ -74,6 +79,24 @@ class EmailRequest(BaseModel):
 # IN-MEMORY SESSION STORE
 # --------------------------------------------------
 sessions: dict[str, PersistentSessionMemory] = {}
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",                 # local dev (Vite)
+        "http://localhost:3000",                 # local dev (CRA)
+        "https://sachithbandarathennakoon.github.io",
+        "https://www.xceed.live",
+        "https://xceed.live",
+        'https://sachithbandarathennakoon.github.io/xceed-ai-ui/',
+        "https://sachiththennakoon.com",
+        "https://www.sachiththennakoon.com"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+#--------------------------------------------------
 
 # --------------------------------------------------
 # CHAT ENDPOINT
@@ -143,7 +166,10 @@ def send_email(req: EmailRequest):
     if not proposal:
         raise HTTPException(status_code=400, detail="Final proposal not found")
 
-    pdf_bytes = markdown_to_pdf_bytes(proposal)
+    pdf_path = markdown_to_pdf(proposal)
+
+    with open(pdf_path, "rb") as f:
+        pdf_bytes = f.read()
 
     send_proposal_email(
         to_email=req.email,
