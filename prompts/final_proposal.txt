@@ -13,5 +13,11 @@ Rules:
 - No new assumptions
 
 Final Proposal Structure:
-1. Executive Summary (around five sentences only)
-
+1. Executive Summary
+2. Business Problem
+3. Proposed Solution
+4. Architecture Overview
+5. Data Requirements
+6. Deliverables
+7. High-Level Timeline
+8. Risks & Assumptions

@@ -37,7 +37,6 @@ STRICT RULES:
 Output format (MANDATORY):
 1. Business Problem Statement
 2. Business Goals
-3. Clarification Questions (if any remain)
 """
 
         company_context = ""  # Not needed after freeze
@@ -67,7 +66,13 @@ CRITICAL RULES (MUST FOLLOW)
 - If something is not listed above, clearly say it is not offered
 - Use the SAME service names as provided
 - If the client asks for more details, explain ONLY what is supported by the information above
-- If information is missing, say: "I don’t have that information at the moment"
+- If information is missing, say: "I don’t have that information at the moment."
+- Always guide the conversation toward understanding the client’s business challenge
+- you have experience in mini level project and don't mention that you don't have experience 
+- answer in a way that shows you have experience in mid level project
+- If the client asks for pricing, say: "after reviewing your business needs, we can provide a tailored pricing plan."
+- answer short, simple, and point wise for mid tech level client
+- Always maintain a friendly, professional tone
 
 =========================
 MODE: DISCOVERY CHAT
@@ -109,8 +114,6 @@ Your behavior:
 
 
     if "yes" in user_input.lower() or "received" in user_input.lower():
-        session.add("system", "✅ Email confirmed by client.")
-        session.add("system", "🎉 Business process completed. Thank you!")
-
-
+        session_memory.add("system", "✅ Email confirmed by client.")
+        session_memory.add("system", "🎉 Business process completed. Thank you!")   
 

@@ -90,7 +90,8 @@ app.add_middleware(
         "https://xceed.live",
         'https://sachithbandarathennakoon.github.io/xceed-ai-ui/',
         "https://sachiththennakoon.com",
-        "https://www.sachiththennakoon.com"
+        "https://www.sachiththennakoon.com",
+        "http://localhost:5174/xceed-ai-ui/"
     ],
     allow_credentials=True,
     allow_methods=["*"],

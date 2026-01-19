@@ -19,4 +19,3 @@ If input is unclear or too short:
 Output format (MANDATORY):
 1. Business Problem Statement
 2. Business Goals
-3. Clarification Questions
