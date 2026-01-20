@@ -234,3 +234,14 @@ def send_proposal_email_api(req: EmailRequest):
         "status": "sent",
         "message": "Proposal email sent successfully"
     }
+
+
+## ---------------------------------greeting endpoint
+from agents.greeting_agent import generate_greeting
+
+@app.get("/greeting")
+def greeting():
+    return {
+        "message": generate_greeting()
+    }
+## --------------------------------------------------

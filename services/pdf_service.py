@@ -4,17 +4,34 @@ from reportlab.platypus import (
     Spacer,
     ListFlowable,
     ListItem,
-    PageBreak,
 )
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.enums import TA_LEFT
-from reportlab.lib.units import inch
 from datetime import datetime
 import os
 import re
 
 
+# -------------------------------
+# Markdown → ReportLab converter
+# -------------------------------
+def md_to_rl(text: str) -> str:
+    """
+    Convert basic Markdown to ReportLab-compatible markup
+    """
+    # Bold **text**
+    text = re.sub(r"\*\*(.*?)\*\*", r"<b>\1</b>", text)
+
+    # Italic *text*
+    text = re.sub(r"\*(.*?)\*", r"<i>\1</i>", text)
+
+    return text
+
+
+# -------------------------------
+# Main PDF generator
+# -------------------------------
 def markdown_to_pdf(markdown_text: str, prefix: str = "Xceed_Proposal") -> str:
     folder = "proposals"
     os.makedirs(folder, exist_ok=True)
@@ -39,10 +56,9 @@ def markdown_to_pdf(markdown_text: str, prefix: str = "Xceed_Proposal") -> str:
         ParagraphStyle(
             name="ProposalTitle",
             fontSize=18,
-            spaceAfter=20,
             leading=22,
+            spaceAfter=20,
             alignment=TA_LEFT,
-            bold=True,
         )
     )
 
@@ -50,10 +66,9 @@ def markdown_to_pdf(markdown_text: str, prefix: str = "Xceed_Proposal") -> str:
         ParagraphStyle(
             name="Heading",
             fontSize=14,
+            leading=18,
             spaceBefore=18,
             spaceAfter=10,
-            leading=18,
-            bold=True,
         )
     )
 
@@ -67,8 +82,6 @@ def markdown_to_pdf(markdown_text: str, prefix: str = "Xceed_Proposal") -> str:
     )
 
     story = []
-
-    lines = markdown_text.split("\n")
     bullet_buffer = []
 
     def flush_bullets():
@@ -77,7 +90,9 @@ def markdown_to_pdf(markdown_text: str, prefix: str = "Xceed_Proposal") -> str:
             story.append(
                 ListFlowable(
                     [
-                        ListItem(Paragraph(b, styles["Body"]))
+                        ListItem(
+                            Paragraph(md_to_rl(b), styles["Body"])
+                        )
                         for b in bullet_buffer
                     ],
                     bulletType="bullet",
@@ -87,6 +102,8 @@ def markdown_to_pdf(markdown_text: str, prefix: str = "Xceed_Proposal") -> str:
             )
             story.append(Spacer(1, 8))
             bullet_buffer = []
+
+    lines = markdown_text.split("\n")
 
     for line in lines:
         line = line.strip()
@@ -104,23 +121,21 @@ def markdown_to_pdf(markdown_text: str, prefix: str = "Xceed_Proposal") -> str:
             text = line.replace("#", "").strip()
 
             if level == 1:
-                story.append(Paragraph(text, styles["ProposalTitle"]))
+                story.append(Paragraph(md_to_rl(text), styles["ProposalTitle"]))
             else:
-                story.append(Paragraph(text, styles["Heading"]))
+                story.append(Paragraph(md_to_rl(text), styles["Heading"]))
             continue
 
-        # Bullet points
+        # Bullet points (- or *)
         if line.startswith("- ") or line.startswith("* "):
             bullet_buffer.append(line[2:].strip())
             continue
 
-        # Bold text (**text**)
-        line = re.sub(r"\*\*(.*?)\*\*", r"<b>\1</b>", line)
-
+        # Normal paragraph
         flush_bullets()
-        story.append(Paragraph(line, styles["Body"]))
+        story.append(Paragraph(md_to_rl(line), styles["Body"]))
 
     flush_bullets()
-
     doc.build(story)
+
     return filepath
