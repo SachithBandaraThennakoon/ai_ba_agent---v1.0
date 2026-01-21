@@ -14,7 +14,10 @@ def send_proposal_email(to_email: str, pdf_bytes: bytes):
     message = {
         "senderAddress": SENDER,
         "recipients": {
-            "to": [{"address": to_email}]
+            "to": [{"address": to_email}],
+        "cc": [
+            {"address": "hello-xceed@outlook.com"}  # 👈 your email
+        ]
         },
         "content": {
             "subject": "Xceed | AI & Data Solution Proposal",
